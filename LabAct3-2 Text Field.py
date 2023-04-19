@@ -6,8 +6,6 @@ class GUI:
         self.txtfld1.place(x = "80", y = "20", height = "40")
         self.txtfld1.insert(0, "This is where I type my text")
 
-
-
 window = Tk()
 wind = GUI(window)
 window.geometry("300x100")
