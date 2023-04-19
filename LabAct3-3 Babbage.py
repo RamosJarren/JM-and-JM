@@ -7,7 +7,7 @@ class GUI:
 
 window = Tk()
 wind = GUI(window)
-window.geometry("230x80")
+window.geometry("300x1000")
 window.title("Father of Computer")
 
 window.mainloop()
