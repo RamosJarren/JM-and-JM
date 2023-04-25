@@ -17,7 +17,7 @@ Division = 1
 screen = Entry(win, bd = 15, justify = "center")
 screen.grid(padx = 15, pady = 10, row = 0, sticky = "w")
 
-def operator():
+def operation(operator):
     global num1
     if float(screen.get()).is_integer():
         num1 = int(screen.get())
@@ -68,7 +68,7 @@ Eight = Button(win, text = "8", width = 2, command = lambda : clicked("8"))
 Eight.grid(row = 2, sticky = "w", padx = 45)
 Seven = Button(win, text = "9", width = 2, command = lambda : clicked("9"))
 Seven.grid(row = 2, sticky = "w", padx = 75)
-Divide = Button(win, text = "/", width = 2, command = lambda : operator(Division))
+Divide = Button(win, text = "/", width = 2, command = lambda : operation(Division))
 Divide.grid(row = 2, sticky = "w", padx = 115, pady = 5)
 
 Four = Button(win, text = "4", width = 2, command = lambda : clicked("4"))
@@ -77,7 +77,7 @@ Five = Button(win, text = "5", width = 2, command = lambda : clicked("5"))
 Five.grid(row = 3, sticky = "w", padx = 45)
 Six = Button(win, text = "6", width = 2, command = lambda : clicked("6"))
 Six.grid(row = 3, sticky = "w", padx = 75)
-Multiply = Button(win, text = "*", width = 2, command = lambda : operator(Multiplication))
+Multiply = Button(win, text = "*", width = 2, command = lambda : operation(Multiplication))
 Multiply.grid(row = 3, sticky = "w", padx = 115, pady = 5)
 
 One = Button(win, text = "1", width = 2, command = lambda : clicked("1"))
@@ -86,14 +86,14 @@ Two = Button(win, text = "2", width = 2, command = lambda : clicked("2"))
 Two.grid(row = 4, sticky = "w", padx = 45)
 Three = Button(win, text = "3", width = 2, command = lambda : clicked("3"))
 Three.grid(row = 4, sticky = "w", padx = 75)
-Subtract = Button(win, text = "-", width = 2, command = lambda : operator(Subtraction))
+Subtract = Button(win, text = "-", width = 2, command = lambda : operation(Subtraction))
 Subtract.grid(row = 4, sticky = "w", padx = 115, pady = 5)
 
 Zero = Button(win, text = "0", width = 2, command = lambda : clicked("0"))
 Zero.grid(row = 5, sticky = "w", padx = 15)
 Period = Button(win, text = ".", width = 2, command = lambda : clicked("."))
 Period.grid(row = 5, sticky = "w", padx = 45)
-Add = Button(win, text = "+", width = 2, command = lambda : operator(Addition))
+Add = Button(win, text = "+", width = 2, command = lambda : operation(Addition))
 Add.grid(row = 5, sticky = "w", padx = 115, pady = 5)
 
 Equal = Button(win, text = "=", width = 2, command = lambda : answer)
