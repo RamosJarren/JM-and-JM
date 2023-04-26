@@ -1,100 +1,66 @@
 from tkinter import *
 
-window = Tk()
-window.geometry("250x360")
-window.title("LabAct4 Calculator")
+win = Tk()
+win.geometry("250x360")
+win.title("GUI Calculator")
 
-Number1 = 0
-Number2 = 0
-Arithmetic = 0
-Result = 0
+screen = Entry(win, bd = 15, justify = "center", width = 36)
+screen.grid(padx = 1, pady = 10, row = 0, sticky = "w",)
 
-Addition = 1
-Subtraction = 2
-Multiplication = 3
-Division = 4
-
-def OperationUsed(operator):
-    global Number1
-    if float(Screen.get()).is_integer():
-        Number1 = int(Screen.get())
+def res():
+    if screen.get() == "":
+        pass
+    elif screen.get()[0] == "0":
+        screen.delete(0, "end")
     else:
-        Number1 = float(Screen.get())
-    Screen.delete(0, END)
-    global Arithmetic
-    Arithmetic = operator
-
-def Clicked(Value):
-    ScreenStore = Screen.get()
-    Screen.delete(0, END)
-    Screen.insert(0, ScreenStore + Value)
+        err = screen.get()
+        err = eval(err)
+        clearf()
+        screen.insert("end", err)
 
 def clearf():
-    Screen.delete(0, END)
-    global Number1, Number2, Arithmetic, Result
-    Number1 = 0
-    Number2 = 0
-    Arithmetic = 0
-    Result = 0
+    screen.delete(0, "end")
 
-def Answer():
-    global Number1, Number2, Arithmetic, Result
-    if float(Screen.get()).is_integer():
-        Number2 = int(Screen.get())
-    else:
-        Number2 = float(Screen.get())
-    Screen.delete(0, END)
-    if Arithmetic == Addition:
-        Result = Number1 + Number2
-    elif Arithmetic == Subtraction:
-        Result = Number1 - Number2
-    elif Arithmetic == Multiplication:
-        Result = Number1 * Number2
-    elif Arithmetic == Division:
-        Result = Number1 / Number2
-    Screen.insert(0, Result)
+clear = Button(win, text = "C", width = 34, height = 2, command = clearf())
+clear.grid(row = 1, sticky = "nw", padx = 1)
+clear.bind('<Button-1>', clearf())
 
-Screen = Entry(window, bd = 15, justify = "center", width = 36)
-Screen.grid(padx = 15, pady = 10, row = 0, column = 0, columnspan = 4, sticky = "w")
+Seven = Button(win, text = "7", width = 7, height = 2,command = lambda : screen.insert("end", "7"))
+Seven.grid(row = 2, sticky = "w", padx = 0)
+Eight = Button(win, text = "8", width = 7, height = 2,command = lambda : screen.insert("end", "8"))
+Eight.grid(row = 2, sticky = "w", padx = 63)
+Seven = Button(win, text = "9", width = 7, height = 2,command = lambda : screen.insert("end", "9"))
+Seven.grid(row = 2, sticky = "w", padx = 126)
+Divide = Button(win, text = "/", width = 7, height = 2,command = lambda : screen.insert("end", "/"))
+Divide.grid(row = 2, sticky = "w", padx = 189, pady = 5)
 
-Clear = Button(window, text = "C", width = 43, height = 2, command = clearf)
-Clear.grid(row = 1, column = 1, columnspan = 4, sticky = "nw", padx = 1)
+Four = Button(win, text = "4", width = 7, height = 2, command = lambda : screen.insert("end", "4"))
+Four.grid(row = 3, sticky = "w", padx = 0)
+Five = Button(win, text = "5", width = 7, height = 2, command = lambda : screen.insert("end", "5"))
+Five.grid(row = 3, sticky = "w", padx = 63)
+Six = Button(win, text = "6", width = 7, height = 2, command = lambda : screen.insert("end", "6"))
+Six.grid(row = 3, sticky = "w", padx = 126)
+Multiply = Button(win, text = "*", width = 7, height = 2, command = lambda : screen.insert("end", "*"))
+Multiply.grid(row = 3, sticky = "w", padx = 189, pady = 5)
 
-Seven = Button(window, text = "7", width = 7, height = 2, command = lambda : Clicked("7"))
-Seven.grid(row = 2, column = 0, sticky = "w", padx = 0)
-Eight = Button(window, text = "8", width = 7, height = 2, command = lambda : Clicked("8"))
-Eight.grid(row = 2, column = 1, sticky = "w", padx = 63)
-Seven = Button(window, text = "9", width = 7, height = 2, command = lambda : Clicked("9"))
-Seven.grid(row = 2, column = 2, sticky = "w", padx = 126)
-Divide = Button(window, text = "/", width = 7, height = 2, command = lambda : OperationUsed(Division))
-Divide.grid(row = 2, column = 3, sticky = "w", padx = 189, pady = 5)
+One = Button(win, text = "1", width = 7, height = 2, command = lambda : screen.insert("end", "1"))
+One.grid(row = 4, sticky = "w", padx = 0)
+Two = Button(win, text = "2", width = 7, height = 2, command = lambda : screen.insert("end", "2"))
+Two.grid(row = 4, sticky = "w", padx = 63)
+Three = Button(win, text = "3", width = 7, height = 2, command = lambda : screen.insert("end", "3"))
+Three.grid(row = 4, sticky = "w", padx = 126)
+Subtract = Button(win, text = "-", width = 7, height = 2, command = lambda : screen.insert("end", "-"))
+Subtract.grid(row = 4, sticky = "w", padx = 189, pady = 5)
 
-Four = Button(window, text = "4", width = 7, height = 2, command = lambda : Clicked("4"))
-Four.grid(row = 3, column = 0, sticky = "w", padx = 0)
-Five = Button(window, text = "5", width = 7, height = 2, command = lambda : Clicked("5"))
-Five.grid(row = 3, column = 1, sticky = "w", padx = 63)
-Six = Button(window, text = "6", width = 7, height = 2, command = lambda : Clicked("6"))
-Six.grid(row = 3, column = 2, sticky = "w", padx = 126)
-Multiply = Button(window, text = "*", width = 7, height = 2, command = lambda : OperationUsed(Multiplication))
-Multiply.grid(row = 3, column = 3, sticky = "w", padx = 189, pady = 5)
+Zero = Button(win, text = "0", width = 10, height = 2, command = lambda : screen.insert("end", "0"))
+Zero.grid(row = 5, sticky = "w", padx = 0)
+Period = Button(win, text = ".", width = 10, height = 2, command = lambda : screen.insert("end", "."))
+Period.grid(row = 5, sticky = "w", padx = 84)
+Add = Button(win, text = "+", width = 10, height = 2, command = lambda : screen.insert("end", "+"))
+Add.grid(row = 5, sticky = "w", padx = 168, pady = 5)
 
-One = Button(window, text = "1", width = 7, height = 2, command = lambda : Clicked("1"))
-One.grid(row = 4, column = 0, sticky = "w", padx = 0)
-Two = Button(window, text = "2", width = 7, height = 2, command = lambda : Clicked("2"))
-Two.grid(row = 4, column = 1, sticky = "w", padx = 63)
-Three = Button(window, text = "3", width = 7, height = 2, command = lambda : Clicked("3"))
-Three.grid(row = 4, column = 2, sticky = "w", padx = 126)
-Subtract = Button(window, text = "-", width = 7, height = 2, command = lambda : OperationUsed(Subtraction))
-Subtract.grid(row = 4, column = 3, sticky = "w", padx = 189, pady = 5)
+Equal = Button(win, text = "=", width = 34, height = 2, command = res())
+Equal.grid(row = 6, sticky = "w", padx =1, pady = 5)
 
-Zero = Button(window, text = "0", width = 7, height = 2, command = lambda : Clicked("0"))
-Zero.grid(row = 5, column = 0, columnspan = 2, sticky = "w", padx = 0)
-Dot = Button(window, text = ".", width = 7, height = 2, command = lambda : Clicked("."))
-Dot.grid(row = 5, column = 2, sticky = "w", padx = 84)
-Add = Button(window, text = "+", width = 7, height = 2, command = lambda : OperationUsed(Addition))
-Add.grid(row = 5, column = 3, sticky = "w", padx = 168, pady = 5)
 
-Equal = Button(window, text = "=", width = 7, height = 2, command = lambda : Answer())
-Equal.grid(row =6, column = 2, columnspan = 4, sticky = "w", padx = 1, pady = 5)
-
-window.mainloop()
+win.mainloop()
