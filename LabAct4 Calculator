@@ -1,7 +1,7 @@
 from tkinter import *
 
 window = Tk()
-window.geometry(250x360)
+window.geometry("250x360")
 window.title("LabAct4 Calculator")
 
 Number1 = 0
