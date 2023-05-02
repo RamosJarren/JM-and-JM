@@ -1,0 +1,9 @@
+header = ["a", "a^2", "a^3", "a^4"]
+data = [[1, 1**2, 1**3],
+        [2, 2**2, 2**3],
+        [3, 3**2, 3**3],
+        [4, 4**2, 4**3]]
+format_row = "{:^12}" * (len(header))
+print(format_row.format("", *header))
+for blank, row in zip(header, data):
+    print(format_row.format("", *row))
