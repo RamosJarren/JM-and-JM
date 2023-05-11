@@ -1,6 +1,5 @@
 from tkinter import *
 
-
 class ListBoxTest:
     def __init__(self):
         self.root = Tk()
