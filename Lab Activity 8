@@ -22,9 +22,10 @@ class ListBoxTest:
     def DeleteSelection(self):
         items = self.list_box_1.curselection()
         pos = 0
-        for i in items: idx = int(i) - pos
-        self.list_box_1.delete(idx, idx)
-        pos = pos + 1
+        for i in items: 
+            idx = int(i) - pos
+            self.list_box_1.delete(idx, idx)
+            pos = pos + 1
 
     def AddSelection(self):
         items = self.list_box_1.curselection()
