@@ -35,5 +35,4 @@ class ListBoxTest:
             self.entry.delete(0, END)
             pos = pos + 1
 
-
 lbt = ListBoxTest()
