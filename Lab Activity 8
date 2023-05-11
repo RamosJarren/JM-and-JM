@@ -32,6 +32,7 @@ class ListBoxTest:
         for i in items:
             idx = int(i) + pos
             self.list_box_1.insert(idx, self.entry.get())
+            self.entry.delete(0, END)
             pos = pos + 1
 
 
