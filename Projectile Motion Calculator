@@ -1,0 +1,93 @@
+import math
+import tkinter as tk
+
+class RangeCalculator:
+    def __init__(self, widget):
+        self.widget = widget
+        self.widget.title("Range Projectile Motion Calculator")
+
+        self.velocity_label = tk.Label(self.widget, text="Velocity (m/s):")
+        self.velocity_label.grid(row=0, column=0, padx=10, pady=10)
+        self.velocity_entry = tk.Entry(self.widget, width=10)
+        self.velocity_entry.grid(row=0, column=1, padx=10, pady=10)
+
+        self.angle_label = tk.Label(self.widget, text = "Angle (degrees):")
+        self.angle_label.grid(row=1, column=0, padx=10, pady=10)
+        self.angle_entry = tk.Entry(self.widget, width=10)
+        self.angle_entry.grid(row=1, column=1, padx=10, pady=10)
+
+        self.height_label = tk.Label(self.widget, text="Height (m):")
+        self.height_label.grid(row=2, column=0, padx=10, pady=10)
+        self.height_entry = tk.Entry(self.widget, width=10)
+        self.height_entry.grid(row=2, column=1, padx=10, pady=10)
+
+        self.calculate_button = tk.Button(self.widget, text="Calculate", command=self.calculate_range)
+        self.calculate_button.grid(row=3, column=0, columnspan=2, padx=10, pady=10)
+        self.clear_button = tk.Button(self.widget, text="Clear All", command=self.clear_all)
+        self.clear_button.grid(row=4, column=0, columnspan=2, padx=10, pady=10)
+
+        self.result_label = tk.Label(self.widget, text=" ")
+        self.result_label.grid(row=5, column=0, columnspan=2, padx=10, pady=10)
+
+    def calculate_range(self):
+        try:
+            velocity = float(self.velocity_entry.get())
+            angle = float(self.angle_entry.get())
+            height = float(self.height_entry.get())
+        except ValueError:
+            self.result_label.config(text="Please enter valid numbers")
+            return
+
+        if angle < 0 or angle > 90:
+            self.result_label.config(text="Angle must be between 0 and 90 degrees")
+            return
+
+        if height < 0:
+            self.result_label.config(text="Height cannot be negative")
+            return
+
+        if height == 0:
+            if velocity:
+                max_height = (velocity ** 2 * math.sin(math.radians(angle)) ** 2) / (2 * 9.81)
+                time_of_flight = (2 * velocity * math.sin(math.radians(angle))) / 9.81
+                range = (velocity ** 2 * math.sin(math.radians(2 * angle))) / 9.81
+            elif angle and height:
+                velocity = math.sqrt((9.81 * height) / math.sin(math.radians(2 * angle)))
+                max_height = ((velocity ** 2) * math.sin(math.radians(angle)) ** 2) / (2 * 9.81)
+                time_of_flight = (2 * velocity * math.sin(math.radians(angle))) / 9.81
+                range = (velocity ** 2 * math.sin(math.radians(2 * angle))) / 9.81
+            else:
+                self.result_label.config(text="Please enter at least two values")
+        elif height > 0:
+            if velocity:
+                xvelocity = velocity * math.cos(math.radians(angle))
+                yvelocity = velocity * math.sin(math.radians(angle))
+                max_height = height + (velocity ** 2 * math.sin(math.radians(angle)) ** 2) / (2 * 9.81)
+                time_of_flight = ((yvelocity) + math.sqrt((yvelocity ** 2) + (2 * 9.81 * height))) / 9.81
+                range = (xvelocity) * (time_of_flight)
+            else:
+                self.result_label.config(text="Height cannot be negative")
+
+        self.result_label.config(text=f"Velocity: {round(velocity, 2)} m/s"
+                                      f"\nMaximum Height: {round(max_height, 2)} meters"
+                                      f"\nTime of Flight: {round(time_of_flight, 2)} seconds"
+                                      f"\nRange: {round(range, 2)} meters")
+
+    def clear_all(self):
+        global velocity, angle, height, range, time_of_flight, max_height
+        velocity = 0
+        angle = 0
+        height = 0
+        range = 0
+        time_of_flight = 0
+        max_height = 0
+        self.velocity_entry.delete(0, "end")
+        self.angle_entry.delete(0, "end")
+        self.height_entry.delete(0, "end")
+        self.result_label.config(text=" ")
+
+
+window = tk.Tk()
+win = RangeCalculator(window)
+window.geometry()
+window.mainloop()
