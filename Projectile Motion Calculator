@@ -74,8 +74,10 @@ class RangeCalculator:
                                       f"\nRange: {round(range, 2)} meters")
 
     def clear_all(self):
-        global velocity, angle, height, range, time_of_flight, max_height
+        global velocity, xvelocity, yvelocity, angle, height, range, time_of_flight, max_height
         velocity = 0
+        xvelocity = 0
+        yvelocity = 0
         angle = 0
         height = 0
         range = 0
