@@ -51,11 +51,6 @@ class RangeCalculator:
                 max_height = (velocity ** 2 * math.sin(math.radians(angle)) ** 2) / (2 * 9.81)
                 time_of_flight = (2 * velocity * math.sin(math.radians(angle))) / 9.81
                 range = (velocity ** 2 * math.sin(math.radians(2 * angle))) / 9.81
-            elif angle and height:
-                velocity = math.sqrt((9.81 * height) / math.sin(math.radians(2 * angle)))
-                max_height = ((velocity ** 2) * math.sin(math.radians(angle)) ** 2) / (2 * 9.81)
-                time_of_flight = (2 * velocity * math.sin(math.radians(angle))) / 9.81
-                range = (velocity ** 2 * math.sin(math.radians(2 * angle))) / 9.81
             else:
                 self.result_label.config(text="Please enter at least two values")
         elif height > 0:
