@@ -1,7 +1,6 @@
 import math
 import numpy as np
 import tkinter as tk
-import matplotlib.pyplot as plt
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from matplotlib.figure import Figure
 
@@ -29,14 +28,13 @@ class RangeCalculator:
         self.calculate_button.grid(row=3, column=0, columnspan=2, padx=10, pady=10)
         self.clear_button = tk.Button(self.widget, text="Clear All", command=self.clear_all)
         self.clear_button.grid(row=4, column=0, columnspan=2, padx=10, pady=10)
-
+        
         self.result_label = tk.Label(self.widget, text=" ")
         self.result_label.grid(row=6, column=0, columnspan=2, padx=10, pady=10)
 
-        self.figure = Figure(figsize=(6, 5), dpi=100)
+        self.figure = Figure(figsize=(5, 5), dpi=100)
         self.canvas = FigureCanvasTkAgg(self.figure, master=self.widget)
         self.canvas.get_tk_widget().grid(row=7, column=0, columnspan=2, padx=10, pady=10)
-
 
     def calculate_range(self):
         try:
@@ -57,17 +55,21 @@ class RangeCalculator:
 
         if height == 0:
             if velocity:
-                max_height = (velocity ** 2 * math.sin(math.radians(angle)) ** 2) / (2 * 9.81)
-                time_of_flight = (2 * velocity * math.sin(math.radians(angle))) / 9.81
-                range = (velocity ** 2 * math.sin(math.radians(2 * angle))) / 9.81
+                g = 9.81
+                theta = math.radians(angle)
+                max_height = (velocity ** 2 * math.sin(theta) ** 2) / (2 * g)
+                time_of_flight = (2 * velocity * math.sin(theta)) / g
+                range = (velocity ** 2 * math.sin(theta * 2)) / g
             else:
                 self.result_label.config(text="Please enter at least two values")
         elif height > 0:
             if velocity:
-                xvelocity = velocity * math.cos(math.radians(angle))
-                yvelocity = velocity * math.sin(math.radians(angle))
-                max_height = height + (velocity ** 2 * math.sin(math.radians(angle)) ** 2) / (2 * 9.81)
-                time_of_flight = ((yvelocity) + math.sqrt((yvelocity ** 2) + (2 * 9.81 * height))) / 9.81
+                g = 9.81
+                theta = math.radians(angle)
+                xvelocity = velocity * math.cos(theta)
+                yvelocity = velocity * math.sin(theta)
+                max_height = height + (velocity ** 2 * math.sin(theta) ** 2) / (2 * g)
+                time_of_flight = ((yvelocity) + math.sqrt((yvelocity ** 2) + (2 * g * height))) / g
                 range = (xvelocity) * (time_of_flight)
             else:
                 self.result_label.config(text="Height cannot be negative")
@@ -80,7 +82,7 @@ class RangeCalculator:
         self.plot_trajectory(velocity, angle, height)
 
     def clear_all(self):
-        global velocity, xvelocity, yvelocity, angle, height, range, time_of_flight, max_height
+        global velocity, xvelocity, yvelocity, angle, height, range, time_of_flight, max_height, theta
         velocity = 0
         xvelocity = 0
         yvelocity = 0
@@ -89,34 +91,33 @@ class RangeCalculator:
         range = 0
         time_of_flight = 0
         max_height = 0
+        theta = 0
+        
         self.velocity_entry.delete(0, "end")
         self.angle_entry.delete(0, "end")
         self.height_entry.delete(0, "end")
         self.result_label.config(text=" ")
+        self.figure.clear()
 
     def plot_trajectory(self, velocity, angle, height):
         g = 9.81
         theta = math.radians(angle)
-
         xvelocity = velocity * math.cos(theta)
         yvelocity = velocity * math.sin(theta)
         max_height = height + (velocity ** 2 * math.sin(theta) ** 2) / (2 * g)
         time_of_flight = ((yvelocity) + math.sqrt((yvelocity ** 2) + (2 * g * height))) / g
         range = (xvelocity) * (time_of_flight)
-
         time = np.linspace(0, time_of_flight, 100)
         xvalue = xvelocity * time
         yvalue = height + yvelocity * time - 0.5 * g * time ** 2
 
         self.figure.clear()
-        ax = self.figure.add_subplot(111)
-        ax.plot(xvalue, yvalue, color='k')
-
-        ax.set_xlabel('Horizontal Distance (m)')
-        ax.set_ylabel('Vertical Distance (m)')
-        ax.set_title('Projectile Motion Trajectory')
-        ax.grid(True)
-
+        graph = self.figure.add_subplot(111)
+        graph.plot(xvalue, yvalue, color='b')
+        graph.set_xlabel('Range (m)  /  Horizontal Distance')
+        graph.set_ylabel('Maximum Height (m)  /  Vertical Distance')
+        graph.set_title('Projectile Motion Trajectory Graph')
+        graph.grid(True)
         self.canvas.draw()
 
 window = tk.Tk()
